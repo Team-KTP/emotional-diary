@@ -41,10 +41,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/new" element={<New />} />
-        <Route path="/diary" element={<Diary />} />
+        <Route path="/diary/:id" element={<Diary />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
-      ;
       <Routes />;
     </>
     // 설정해 둔 경로가 아닌 다른 경로 접근 시 NotFound 컴포넌트 렌더링
