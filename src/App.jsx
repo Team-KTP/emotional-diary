@@ -83,29 +83,6 @@ function App() {
 
   return (
     <>
-      <button
-        onClick={() => {
-          onCreate(1, "test", new Date().getTime());
-        }}
-      >
-        일기장 추가
-      </button>
-
-      <button
-        onClick={() => {
-          onUpdate(1, "updateTest", new Date().getTime());
-        }}
-      >
-        일기장 수정
-      </button>
-
-      <button
-        onClick={() => {
-          onRemove(1);
-        }}
-      >
-        일기장 삭제
-      </button>
       <DiaryStateContext.Provider value={data}>
         <DiaryDispatchContext.Provider value={{ onCreate, onRemove, onUpdate }}>
           <Routes>
@@ -138,3 +115,7 @@ export default App;
 
 // useReducer : 상태 관리를 위한 훅, 복잡한 상태 로직을 다룰 때 유용
 // useRef : 변경 가능한 참조를 생성하는 훅, 주로 DOM 요소에 접근하거나 변경 가능한 값을 저장할 때 사용
+
+// createContext : Context API를 사용하여 전역 상태를 관리하는 데 사용
+// provider : Context의 값을 하위 컴포넌트에 제공하는 역할
+// Context API : 컴포넌트 트리 전체에 데이터를 전달할 수 있는 방법, props drilling을 피할 수 있음
