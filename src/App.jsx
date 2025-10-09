@@ -3,7 +3,9 @@ import "./App.css";
 import Home from "./pages/Home";
 import New from "./pages/New";
 import Diary from "./pages/Diary";
+import Edit from "./pages/Edit";
 import NotFound from "./pages/NotFound";
+
 import Button from "./components/Button";
 import Header from "./components/Header";
 
@@ -30,36 +32,11 @@ function App() {
     // 내부 링크를 생성할 떄 사용
     // to : 이동할 경로를 지정
     <>
-      <Header
-        title={"Header"}
-        leftChild={<Button text={"left"} />}
-        rightChild={<Button text={"right"} />}
-      />
-      <Button
-        text={"123"}
-        type={"DEFAULT"}
-        onClick={() => {
-          console.log("123");
-        }}
-      />
-      <Button
-        text={"123"}
-        type={"POSITIVE"}
-        onClick={() => {
-          console.log("123");
-        }}
-      />
-      <Button
-        text={"123"}
-        type={"NEGATIVE"}
-        onClick={() => {
-          console.log("123");
-        }}
-      />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/new" element={<New />} />
         <Route path="/diary/:id" element={<Diary />} />
+        <Route path="/edit/:id" element={<Edit />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Routes />
