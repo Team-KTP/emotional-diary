@@ -5,6 +5,7 @@ import New from "./pages/New";
 import Diary from "./pages/Diary";
 import NotFound from "./pages/NotFound";
 import Button from "./components/Button";
+import Header from "./components/Header";
 
 import { getEmotionImage } from "./util/get-emotion-image";
 
@@ -29,6 +30,11 @@ function App() {
     // 내부 링크를 생성할 떄 사용
     // to : 이동할 경로를 지정
     <>
+      <Header
+        title={"Header"}
+        leftChild={<Button text={"left"} />}
+        rightChild={<Button text={"right"} />}
+      />
       <Button
         text={"123"}
         type={"DEFAULT"}

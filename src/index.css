@@ -19,6 +19,7 @@ html, body {
   margin: 0 auto;
 
   box-shadow: rgba(100,100,100,0.2) 0px 0px 29px 0px ; /*옆에 그림자 */
+  padding: 0px 20px; /*좌우 여백 */
 }
 
 body * {

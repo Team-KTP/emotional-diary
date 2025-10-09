@@ -1,0 +1,27 @@
+ .Header {
+    display: flex;  /* flex 는 컨테이너 안의 아이템들을 유연하게 배치할 수 있게 해줍니다. */
+    align-items: center; /* 아이템들을 수직으로 가운데 정렬합니다. */
+    
+    padding: 20px 0px; /* 위아래로 20px, 좌우로 0px의 패딩을 줍니다. */
+    border-bottom: 1px solid #ddd; /* 아래쪽에 연한 회색 선을 추가합니다. */
+ }
+
+ .Header > div {
+    display: flex;
+ }
+
+ .Header .header_center {
+    width: 50%; /* 화면의 50% 너비를 차지합니다. */
+    justify-content: center; /* flex가 적용된 요소 내 자식들을 가운데 정렬합니다. */
+    font-size: 25px; /* 글자 크기를 25px로 설정합니다. */
+}
+
+ .Header .header_left {
+    width: 25%; /* 화면의 25% 너비를 차지합니다. */
+    justify-content: flex-start; /* flex가 적용된 요소 내 자식들을 왼쪽으로 정렬합니다. */
+}
+
+.Header .header_right {
+    width: 25%; /* 화면의 25% 너비를 차지합니다. */
+    justify-content: flex-end; /* flex가 적용된 요소 내 자식들을 오른쪽으로 정렬합니다. */
+}
