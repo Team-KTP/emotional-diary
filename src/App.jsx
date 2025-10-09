@@ -1,3 +1,4 @@
+import { useReducer, useRef, createContext } from "react";
 import { Route, Routes, Link, useNavigate } from "react-router-dom";
 import "./App.css";
 import Home from "./pages/Home";
@@ -6,43 +7,134 @@ import Diary from "./pages/Diary";
 import Edit from "./pages/Edit";
 import NotFound from "./pages/NotFound";
 
-import Button from "./components/Button";
-import Header from "./components/Header";
-
 import { getEmotionImage } from "./util/get-emotion-image";
 
-// 1. "/" : 모든 일기를 조회하는 페이지
-// 2. "/new" : 새로운 일기를 작성하는 페이지
-// 3. "/diary" : 특정 일기의 상세 페이지
-// react에서는 페이지를 컴포넌트로 관리 하기에 각 페이지를 컴포넌트로 만들어야 함
+const mockData = [
+  {
+    id: 1,
+    emotionId: 1,
+    content: "오늘의 일기 1번",
+    createdAt: new Date().getTime(),
+  },
+  {
+    id: 2,
+    emotionId: 2,
+    content: "오늘의 일기 2번",
+    createdAt: new Date().getTime(),
+  },
+];
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "CREATE":
+      return [action.data, ...state];
+    case "UPDATE":
+      return state.map((item) =>
+        // 혹시 모를 id의 타입이 다를 수 있으니 String으로 통일
+        String(item.id) === String(action.data.id) ? { ...action.data } : item
+      );
+    case "REMOVE":
+      return state.filter(
+        (item) => String(item.id) !== String(action.targetId)
+      );
+    default:
+      return state;
+  }
+}
+
+const DiaryStateContext = createContext();
+const DiaryDispatchContext = createContext();
+const DiaryNextIdContext = createContext();
 
 function App() {
-  const nav = useNavigate();
+  const [data, dispatch] = useReducer(reducer, mockData);
+  const dataId = useRef(3);
 
-  const onClickBtn = (path) => {
-    nav(path);
+  // 일기 추가
+  const onCreate = (emotionId, content, createdAt) => {
+    dispatch({
+      type: "CREATE",
+      data: {
+        id: dataId.current++,
+        emotionId: emotionId,
+        content: content,
+        createdAt: createdAt,
+      },
+    });
   };
-  return (
-    // Routes : 여러 Route 컴포넌트를 감싸서 라우팅을 관리하는 역할 Routes안에는 Route 컴포넌트만 들어갈수있다.
-    // Route : 각각의 경로와 해당 경로에 매핑되는 컴포넌트를 정의
-    // path : URL 경로를 지정
-    // element : 해당 경로에 매핑되는 컴포넌트를 지정
 
-    // Link : 페이지 이동을 위한 컴포넌트, a태그와 비슷하지만 새로고침 없이도 페이지 이동 가능
-    // 내부 링크를 생성할 떄 사용
-    // to : 이동할 경로를 지정
+  // 일기 수정
+  const onUpdate = (id, emotionId, content, createdAt) => {
+    dispatch({
+      type: "UPDATE",
+      data: {
+        id: id,
+        emotionId: emotionId,
+        content: content,
+        createdAt: createdAt,
+      },
+    });
+  };
+
+  // 일기 삭제
+  const onRemove = (id) => {
+    dispatch({ type: "REMOVE", targetId: id });
+  };
+
+  return (
     <>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/new" element={<New />} />
-        <Route path="/diary/:id" element={<Diary />} />
-        <Route path="/edit/:id" element={<Edit />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-      <Routes />
+      <button
+        onClick={() => {
+          onCreate(1, "test", new Date().getTime());
+        }}
+      >
+        일기장 추가
+      </button>
+
+      <button
+        onClick={() => {
+          onUpdate(1, "updateTest", new Date().getTime());
+        }}
+      >
+        일기장 수정
+      </button>
+
+      <button
+        onClick={() => {
+          onRemove(1);
+        }}
+      >
+        일기장 삭제
+      </button>
+      <DiaryStateContext.Provider value={data}>
+        <DiaryDispatchContext.Provider value={{ onCreate, onRemove, onUpdate }}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/new" element={<New />} />
+            <Route path="/diary/:id" element={<Diary />} />
+            <Route path="/edit/:id" element={<Edit />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+          <Routes />
+        </DiaryDispatchContext.Provider>
+      </DiaryStateContext.Provider>
     </>
     // 설정해 둔 경로가 아닌 다른 경로 접근 시 NotFound 컴포넌트 렌더링
   );
 }
 
 export default App;
+
+// 정리
+
+// Routes : 여러 Route 컴포넌트를 감싸서 라우팅을 관리하는 역할 Routes안에는 Route 컴포넌트만 들어갈수있다.
+// Route : 각각의 경로와 해당 경로에 매핑되는 컴포넌트를 정의
+// path : URL 경로를 지정
+// element : 해당 경로에 매핑되는 컴포넌트를 지정
+
+// Link : 페이지 이동을 위한 컴포넌트, a태그와 비슷하지만 새로고침 없이도 페이지 이동 가능
+// 내부 링크를 생성할 떄 사용
+// to : 이동할 경로를 지정
+
+// useReducer : 상태 관리를 위한 훅, 복잡한 상태 로직을 다룰 때 유용
+// useRef : 변경 가능한 참조를 생성하는 훅, 주로 DOM 요소에 접근하거나 변경 가능한 값을 저장할 때 사용
