@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import New from "./pages/New";
 import Diary from "./pages/Diary";
 import NotFound from "./pages/NotFound";
+import Button from "./components/Button";
 
 import { getEmotionImage } from "./util/get-emotion-image";
 
@@ -28,24 +29,27 @@ function App() {
     // 내부 링크를 생성할 떄 사용
     // to : 이동할 경로를 지정
     <>
-      <div>
-        <img src={getEmotionImage(1)} />
-        <img src={getEmotionImage(2)} />
-        <img src={getEmotionImage(3)} />
-        <img src={getEmotionImage(4)} />
-        <img src={getEmotionImage(5)} />
-      </div>
-      <div>
-        <Link to="/">Home</Link>
-        <Link to="/new">New</Link>
-        <Link to="/diary">Diary</Link>
-        <Link to="/notfound">NotFound</Link>
-      </div>
-      <div>
-        <button onClick={() => onClickBtn("/")}>Home</button>
-        <button onClick={() => onClickBtn("/new")}>New</button>
-        <button onClick={() => onClickBtn("/diary")}>Diary</button>
-      </div>
+      <Button
+        text={"123"}
+        type={"DEFAULT"}
+        onClick={() => {
+          console.log("123");
+        }}
+      />
+      <Button
+        text={"123"}
+        type={"POSITIVE"}
+        onClick={() => {
+          console.log("123");
+        }}
+      />
+      <Button
+        text={"123"}
+        type={"NEGATIVE"}
+        onClick={() => {
+          console.log("123");
+        }}
+      />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/new" element={<New />} />
