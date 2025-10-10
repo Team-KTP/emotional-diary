@@ -32,12 +32,14 @@ const DiaryList = ({ diaryList }) => {
           <option value="latest">최신순</option>
           <option value="oldest">오래된 순</option>
         </select>
+
         <Button
           onClick={() => navigate("/new")}
           text={"새 일기쓰기"}
           type={"POSITIVE"}
         />
       </div>
+
       <div className="list_wrapper">
         {sortedDiaryList.map((item) => (
           <DiaryItem key={item.id} {...item} />

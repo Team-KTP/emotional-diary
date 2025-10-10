@@ -52,6 +52,7 @@ export const DiaryStateContext = createContext();
 export const DiaryDispatchContext = createContext();
 
 function App() {
+  // 일기 데이터 관리를 위해 useReducer 사용
   const [data, dispatch] = useReducer(reducer, mockData);
   const dataId = useRef(3);
 
@@ -86,6 +87,11 @@ function App() {
     dispatch({ type: "REMOVE", targetId: id });
   };
 
+  // context를 사용한 이유는 props drilling을 피하기 위해서
+  // context를 사용하지 않는다면 Home -> DiaryList -> DiaryItem -> Button 으로 props를 넘겨줘야함
+  // context를 사용하면 최상위 컴포넌트인 App에서 context를 제공하고, 필요한 하위 컴포넌트에서 context를 사용하면 됨
+  // context를 사용하면 props를 일일이 넘겨줄 필요가 없어서 편리함
+  // 단점은 컴포넌트가 많아지면 어떤 컴포넌트에서 context를 사용하는지 파악하기 어려울 수 있음
   return (
     <>
       <DiaryStateContext.Provider value={data}>
