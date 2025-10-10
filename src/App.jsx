@@ -14,13 +14,19 @@ const mockData = [
     id: 1,
     emotionId: 1,
     content: "오늘의 일기 1번",
-    createdAt: new Date().getTime(),
+    createdAt: new Date("2025-10-10").getTime(),
   },
   {
     id: 2,
     emotionId: 2,
     content: "오늘의 일기 2번",
-    createdAt: new Date().getTime(),
+    createdAt: new Date("2025-10-09").getTime(),
+  },
+  {
+    id: 3,
+    emotionId: 3,
+    content: "오늘의 일기 3번",
+    createdAt: new Date("2025-09-10").getTime(),
   },
 ];
 
@@ -42,9 +48,8 @@ function reducer(state, action) {
   }
 }
 
-const DiaryStateContext = createContext();
-const DiaryDispatchContext = createContext();
-const DiaryNextIdContext = createContext();
+export const DiaryStateContext = createContext();
+export const DiaryDispatchContext = createContext();
 
 function App() {
   const [data, dispatch] = useReducer(reducer, mockData);
